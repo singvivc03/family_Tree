@@ -42,30 +42,44 @@ var people = []peopleStub{
 func Build() family.Tree {
 	dummyTree := family.New()
 	for _, individual := range people {
-		member := person.NewPersonBuilder().SetName(individual.name).SetGender(individual.gender).Build()
-		if individual.mother != "" {
-			mother, err := dummyTree.FindMemberByName(individual.mother)
-			if err != nil {
-				panic(err.Error())
-			}
-			member = member.ToBuilder().SetMother(mother).Build()
-		}
-		if individual.father != "" {
-			father, err := dummyTree.FindMemberByName(individual.father)
-			if err != nil {
-				panic(err.Error())
-			}
-			member = member.ToBuilder().SetFather(father).Build()
-		}
-		if individual.spouse != "" {
-			spouseGender := person.Male
-			if individual.gender == person.Male {
-				spouseGender = person.Female
-			}
-			spouse := person.NewPerson(individual.spouse, spouseGender)
-			member = member.ToBuilder().SetSpouse(spouse).Build()
-		}
-		dummyTree.Add(member)
+		member := person.NewPersonBuilder().SetName(individual.name).SetGender(individual.gender)
+		member = updateMemberWithSpouse(individual.spouse, individual.gender, member)
+		person := updateMemberWithParent(individual.father, individual.mother, member, dummyTree)
+		dummyTree.Add(person)
 	}
 	return dummyTree
+}
+
+func updateMemberWithSpouse(spouseName string, spouseGender string, memberBuilder person.Builder) person.Builder {
+	if len(spouseName) > 0 {
+		gender := person.Male
+		if spouseGender == person.Male {
+			gender = person.Female
+		}
+		memberBuilder = memberBuilder.SetSpouse(person.NewPerson(spouseName, gender))
+	}
+	return memberBuilder
+}
+
+func updateMemberWithParent(fName string, mName string, memberBuilder person.Builder, dummyTree family.Tree) person.Person {
+	var father, mother person.Person
+	var err error
+	if len(fName) > 0 {
+		father, err = dummyTree.FindMemberByName(fName)
+		if err != nil {
+			panic(err.Error())
+		}
+	}
+	if len(mName) > 0 {
+		mother, err = dummyTree.FindMemberByName(mName)
+		if err != nil {
+			panic(err.Error())
+		}
+	}
+	person := memberBuilder.SetMother(mother).SetFather(father).Build()
+	if father != nil && mother != nil {
+		father.AddChild(person)
+		mother.AddChild(person)
+	}
+	return person
 }

@@ -30,17 +30,11 @@ func (b *builder) SetGender(gender string) Builder {
 }
 
 func (b *builder) SetMother(mother Person) Builder {
-	if mother != nil {
-		mother.AddChild(b.person)
-	}
 	b.person.mother = mother
 	return b
 }
 
 func (b *builder) SetFather(father Person) Builder {
-	if father != nil {
-		father.AddChild(b.person)
-	}
 	b.person.father = father
 	return b
 }
