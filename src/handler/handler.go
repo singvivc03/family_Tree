@@ -10,6 +10,7 @@ var allHandlers map[string]Handle
 func init() {
 	allHandlers = map[string]Handle{
 		"Maternal-Aunt": maternalAuntHandler,
+		"Paternal-Aunt": paternalAuntHandler,
 	}
 }
 

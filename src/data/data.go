@@ -24,7 +24,7 @@ var people = []peopleStub{
 	{"Tritha", "Female", "Chit", "Amba", ""},
 	{"Vritha", "Male", "Chit", "Amba", ""},
 	{"Yodhan", "Male", "Jaya", "Dritha", ""},
-	{"Villa", "Female", "Vich", "Lika", ""},
+	{"Vila", "Female", "Vich", "Lika", ""},
 	{"Chika", "Female", "Vich", "Lika", ""},
 	{"Jnki", "Female", "Aras", "Chitra", "Arit"},
 	{"Ahit", "Male", "Aras", "Chitra", ""},
