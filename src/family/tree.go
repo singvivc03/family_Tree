@@ -52,6 +52,8 @@ func (t *tree) AddChild(motherName string, child person.Person) error {
 		return errChildAddtionFailed
 	}
 	child = child.ToBuilder().SetMother(mother).SetFather(mother.GetSpouse()).Build()
+	mother.AddChild(child)
+	mother.GetSpouse().AddChild(child)
 	return t.Add(child)
 }
 

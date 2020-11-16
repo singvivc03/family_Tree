@@ -15,6 +15,9 @@ func init() {
 		"Maternal-Uncle": maternalUncleHandler,
 		"Sister-In-Law":  sisterInLawHandler,
 		"Brother-In-Law": brotherInLawHandler,
+		"Son":            sonHandler,
+		"Daughter":       daughterHandler,
+		"Siblings":       siblingHandler,
 	}
 }
 
